@@ -1,0 +1,31 @@
+services:
+
+  node-exporter:
+    image: prom/node-exporter:v1.9.1
+    container_name: node-exporter
+    restart: unless-stopped
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.rootfs=/rootfs'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.mount-points-exclude=^/(sys|proc|dev|host|etc)($$|/)'
+
+  fluent-bit:
+    image: fluent/fluent-bit:3.2.10
+    container_name: fluent-bit
+    restart: unless-stopped
+    volumes:
+      - ./fluentbit/fluent-bit.conf:/fluent-bit/etc/conf/fluent-bit.conf
+      - ./fluentbit/parsers.conf:/fluent-bit/etc/conf/parsers.conf
+      - ./fluentbit/logmap.json:/fluent-bit/etc/conf/logmap.json
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+#      - fluent_bit_db:/var/log/fluent-bit
+    command: /fluent-bit/bin/fluent-bit --config=/fluent-bit/etc/conf/fluent-bit.conf
+
+#volumes:
+#  fluent_bit_db:

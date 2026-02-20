@@ -1,0 +1,22 @@
+monitoring-docker-stack
+Copyright 2025 Tecso
+
+This product includes software and content developed by third parties.
+
+-------------------------------------------------------------------------------
+
+grafana/dashboards/node-exporter.json
+
+  "Node Exporter Full" dashboard (Grafana dashboard ID 1860)
+  Source:  https://github.com/rfmoz/grafana-dashboards
+  License: Apache License, Version 2.0
+           http://www.apache.org/licenses/LICENSE-2.0
+
+-------------------------------------------------------------------------------
+
+prometheus/alerts/node-exporter.yml
+
+  Alert rules adapted from "Awesome Prometheus Alerts"
+  Source:  https://github.com/samber/awesome-prometheus-alerts
+  License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+           https://creativecommons.org/licenses/by/4.0/

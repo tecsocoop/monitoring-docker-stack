@@ -1,0 +1,16 @@
+groups: 
+
+- name: tests
+
+  rules:
+
+    - alert: TestAlertas
+      expr: 'vector(1)'
+      for: 0m
+      labels:
+        severity: critical
+      annotations:
+        summary: Prometheus + Alertmanager OK (instance{{ $labels.instance }})
+        description: "Prueba de prometheus y alertmanager. Para desactivar: comentar la alerta en test.yml...\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+  
+  

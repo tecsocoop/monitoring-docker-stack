@@ -1,0 +1,12 @@
+apiVersion: 1
+
+contactPoints:
+  - orgId: 1
+    name: slack
+    receivers:
+      - uid: slack
+        type: slack
+        settings:
+          recipient: '#<your-slack-channel>'
+          token: <your-slack-bot-token>  # format: xoxb-...
+        disableResolveMessage: false
