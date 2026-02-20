@@ -4,6 +4,8 @@ services:
     image: prom/node-exporter:v1.9.1
     container_name: node-exporter
     restart: unless-stopped
+    #ports:
+    #  - "9100:9100" # enable only for external access 
     volumes:
       - /proc:/host/proc:ro
       - /sys:/host/sys:ro
@@ -24,8 +26,4 @@ services:
       - ./fluentbit/logmap.json:/fluent-bit/etc/conf/logmap.json
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
-#      - fluent_bit_db:/var/log/fluent-bit
     command: /fluent-bit/bin/fluent-bit --config=/fluent-bit/etc/conf/fluent-bit.conf
-
-#volumes:
-#  fluent_bit_db:
