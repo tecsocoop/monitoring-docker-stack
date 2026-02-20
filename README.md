@@ -38,6 +38,10 @@ El archivo `alertmanager.yml` esta en `.gitignore` y no se versiona.
 
 ### 3. Agregar nodos a monitorear
 
+```
+cp prometheus/targets/nodes.json.example prometheus/targets/nodes.json
+```
+
 Editar `prometheus/targets/nodes.json` agregando una entrada por cada nodo:
 
 ```json
