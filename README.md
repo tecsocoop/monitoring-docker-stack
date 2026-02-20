@@ -1,123 +1,126 @@
 # monitoring-docker-stack
 
-Stack de monitoreo centralizado basado en Docker Compose.
+Simple monitoring stack based on Docker Compose.
 
-## Instalacion del servidor
+> [Versión en español](README.es.md)
 
-| Componente   | Version |
+## Server Installation
+
+| Component    | Version |
 |--------------|---------|
 | Grafana      | 12.3.3  |
 | Loki         | 3.6.5   |
 | Prometheus   | v3.9.1  |
 | Alertmanager | v0.31.1 |
 
-### 1. Variables de entorno
+### 1. Environment variables
 
-Copiar `.env.example` a `.env` y completar los valores:
+Copy `.env.example` to `.env` and fill in the values:
 
 ```
 cp .env.example .env
 ```
 
-Editar `.env` con las credenciales de Grafana y, opcionalmente, el dominio si se
-accede via reverse proxy o ELB.
+Edit `.env` with the Grafana credentials and, optionally, the domain if accessed
+via a reverse proxy or ELB.
 
 ### 2. Alertmanager
 
-Copiar el template de configuracion y completar el webhook de Slack:
+Copy the configuration template and fill in the Slack webhook:
 
 ```
 cp prometheus/alertmanager/alertmanager.yml.example prometheus/alertmanager/alertmanager.yml
 ```
 
-Editar `prometheus/alertmanager/alertmanager.yml` y reemplazar:
-- `api_url`: webhook URL de Slack (https://api.slack.com/messaging/webhooks)
-- `channel`: canal de Slack donde se envian las alertas
+Edit `prometheus/alertmanager/alertmanager.yml` and replace:
+- `api_url`: Slack webhook URL (https://api.slack.com/messaging/webhooks)
+- `channel`: Slack channel where alerts are sent
 
-El archivo `alertmanager.yml` esta en `.gitignore` y no se versiona.
+The `alertmanager.yml` file is listed in `.gitignore` and is not versioned.
 
-### 3. Agregar nodos a monitorear
+### 3. Add nodes to monitor
 
 ```
 cp prometheus/targets/nodes.json.example prometheus/targets/nodes.json
 ```
 
-Editar `prometheus/targets/nodes.json` agregando una entrada por cada nodo:
+Edit `prometheus/targets/nodes.json` by adding one entry per node:
 
 ```json
 [
   {
-    "targets": ["IP_DEL_NODO:9100"],
+    "targets": ["NODE_IP:9100"],
     "labels": {
-      "instance": "nombre-descriptivo",
+      "instance": "descriptive-name",
       "env": "production"
     }
   }
 ]
 ```
 
-Prometheus recarga este archivo automaticamente cada 1 minuto sin necesidad de
-reiniciar el contenedor.
+Prometheus reloads this file automatically every 1 minute without needing to
+restart the container.
 
-### 4. Iniciar el stack
+### 4. Start the stack
 
 ```
 docker compose up -d
 ```
 
-Grafana queda disponible en `http://HOST:3000`.
+Grafana will be available at `http://HOST:3000`.
 
-# Agente de nodo (nodes/monitoring-docker-node)
+# Node Agent (nodes/monitoring-docker-node)
 
-## Instalacion del agente en un nodo
+## Agent Installation on a Node
 
-El directorio `nodes/monitoring-docker-node` contiene el compose para el agente
-que corre en cada maquina a monitorear.
+The `nodes/monitoring-docker-node` directory contains the compose file for the
+agent that runs on each machine to be monitored.
 
-| Componente    | Version |
+| Component     | Version |
 |---------------|---------|
 | Fluent Bit    | 3.2.10  |
 | Node Exporter | v1.9.1  |
 
-### 1. Requisitos
+### 1. Requirements
 
-- El nodo debe tener conectividad de red al servidor de monitoreo.
-- Los puertos requeridos desde el nodo hacia el servidor son:
-  - `3100` (Loki, para envio de logs)
+- The node must have network connectivity to the monitoring server.
+- Required ports from the node to the server:
+  - `3100` (Loki, for log shipping)
 
-### 2. Configurar el endpoint de Loki
+### 2. Configure the Loki endpoint
 
-Editar `nodes/monitoring-docker-node/fluentbit/fluent-bit.conf` y actualizar el
-campo `Host` en la seccion `[OUTPUT]` con la IP o hostname del servidor de
-monitoreo:
+Edit `nodes/monitoring-docker-node/fluentbit/fluent-bit.conf` and update the
+`Host` field in the `[OUTPUT]` section with the IP or hostname of the monitoring
+server:
 
 ```
 [OUTPUT]
-    Host    IP_DEL_SERVIDOR
+    Host    SERVER_IP
 ```
 
-### 3. Iniciar el agente
+### 3. Start the agent
 
 ```
 docker compose up -d
 ```
 
-### 4. Registrar el nodo en Prometheus
+### 4. Register the node in Prometheus
 
-Agregar la IP del nodo en `prometheus/targets/nodes.json` en el servidor
-(ver paso 3 de la instalacion del servidor).
+Add the node's IP to `prometheus/targets/nodes.json` on the server
+(see step 3 of the server installation).
 
 
 ---
 
-## Funcionalidades opcionales
+## Optional Features
 
-### Screenshots en alertas de Grafana
+### Screenshots in Grafana alerts
 
-Descomentar en `docker-compose.yml` el servicio `grafana-image-renderer` y en
-`grafana/grafana.ini` las secciones `[unified_alerting.screenshots]` y `[rendering]`.
+Uncomment the `grafana-image-renderer` service in `docker-compose.yml` and the
+`[unified_alerting.screenshots]` and `[rendering]` sections in
+`grafana/grafana.ini`.
 
 ### Google OAuth
 
-Descomentar la seccion `[auth.google]` en `grafana/grafana.ini` y agregar las
-variables `GF_AUTH_GOOGLE_CLIENT_ID` y `GF_AUTH_GOOGLE_CLIENT_SECRET` en `.env`.
+Uncomment the `[auth.google]` section in `grafana/grafana.ini` and add the
+`GF_AUTH_GOOGLE_CLIENT_ID` and `GF_AUTH_GOOGLE_CLIENT_SECRET` variables to `.env`.
