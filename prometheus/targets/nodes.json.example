@@ -1,8 +1,16 @@
 [
   {
-    "targets": ["192.168.X.Y:9100"],
+    "targets": ["a.a.a.a:9100"],
     "labels": {
-      "instance": "my-server",
+      "instance": "backend",
+      "env": "uat"
+    }
+  },
+  {
+    "targets": ["b.b.b.b:9100"],
+    "labels": {
+      "instance": "backend",
+      "env": "sit"
     }
   }
 ]
