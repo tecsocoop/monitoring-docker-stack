@@ -15,6 +15,7 @@ datasources:
       cacheLevel: 'High'
       disableRecordingRules: false
       incrementalQueryOverlapWindow: 10m
+      timeInterval: 1m
 #      exemplarTraceIdDestinations:
 #        # Field with internal link pointing to data source in Grafana.
 #        # datasourceUid value can be anything, but it should be unique across all defined data source uids.
