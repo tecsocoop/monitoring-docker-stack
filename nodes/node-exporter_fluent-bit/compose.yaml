@@ -4,6 +4,7 @@ services:
     image: prom/node-exporter:v1.9.1
     container_name: node-exporter
     restart: unless-stopped
+    uts: host
     #ports:
     #  - "9100:9100" # enable only for external access 
     volumes:
