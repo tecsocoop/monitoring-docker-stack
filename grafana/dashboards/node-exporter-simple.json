@@ -24,7 +24,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 0,
+  "id": 1,
   "links": [
     {
       "icon": "external link",
@@ -15928,31 +15928,7 @@
           "type": "prometheus",
           "uid": "${ds_prometheus}"
         },
-        "definition": "label_values(up,env)",
-        "label": "env",
-        "name": "env",
-        "options": [],
-        "query": {
-          "qryType": 1,
-          "query": "label_values(up,env)",
-          "refId": "PrometheusVariableQueryEditor-VariableQuery"
-        },
-        "refresh": 1,
-        "regex": "",
-        "type": "query"
-      },
-      {
-        "allowCustomValue": false,
-        "current": {
-          "text": "node",
-          "value": "node"
-        },
-        "datasource": {
-          "type": "prometheus",
-          "uid": "${ds_prometheus}"
-        },
         "definition": "",
-        "hide": 2,
         "includeAll": false,
         "label": "env",
         "name": "env",
@@ -15969,21 +15945,21 @@
       {
         "allowCustomValue": false,
         "current": {
-          "text": "ip-10-20-3-79",
-          "value": "ip-10-20-3-79"
+          "text": "backend",
+          "value": "backend"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "${ds_prometheus}"
         },
-        "definition": "label_values(node_uname_info{env=\"$env\"},nodename)",
+        "definition": "label_values(node_uname_info{env=\"$env\"},instance)",
         "includeAll": false,
-        "label": "Nodename",
-        "name": "nodename",
+        "label": "Instance",
+        "name": "instance",
         "options": [],
         "query": {
           "qryType": 1,
-          "query": "label_values(node_uname_info{env=\"$env\"},nodename)",
+          "query": "label_values(node_uname_info{env=\"$env\"},instance)",
           "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
@@ -15994,21 +15970,22 @@
       {
         "allowCustomValue": false,
         "current": {
-          "text": "backend",
-          "value": "backend"
+          "text": "ip-10-20-3-79",
+          "value": "ip-10-20-3-79"
         },
         "datasource": {
           "type": "prometheus",
           "uid": "${ds_prometheus}"
         },
-        "definition": "label_values(node_uname_info{env=\"$env\", nodename=\"$nodename\"}, instance)",
+        "definition": "label_values(node_uname_info{env=\"$env\", instance=\"$instance\"},nodename)",
         "includeAll": false,
-        "label": "Instance",
-        "name": "instance",
+        "label": "Nodename",
+        "name": "nodename",
         "options": [],
         "query": {
-          "query": "label_values(node_uname_info{env=\"$env\", nodename=\"$nodename\"}, instance)",
-          "refId": "Prometheus-node-Variable-Query"
+          "qryType": 1,
+          "query": "label_values(node_uname_info{env=\"$env\", instance=\"$instance\"},nodename)",
+          "refId": "PrometheusVariableQueryEditor-VariableQuery"
         },
         "refresh": 1,
         "regex": "",
@@ -16025,5 +16002,5 @@
   "timezone": "browser",
   "title": "node-exporter-simple",
   "uid": "node-exporter-simple",
-  "version": 5
+  "version": 8
 }
