@@ -2,8 +2,6 @@
 
 Simple monitoring stack based on Docker Compose.
 
-> [Versión en español](README.es.md)
-
 ## Server Installation
 
 | Component    | Version |
@@ -114,13 +112,41 @@ Add the node's IP to `prometheus/targets/nodes.json` on the server
 
 ## Optional Features
 
-### Screenshots in Grafana alerts
+### Loki
+
+Install Docker plugin: 
+
+```
+docker plugin install grafana/loki-docker-driver:3.6.5-<amd64/arm64> --alias loki --grant-all-permissions
+docker plugin enable loki
+```
+
+add to compose: 
+
+```
+services:
+  app:
+    image: postgres:latest
+    restart: always
+    ports:
+      - 5432:5432
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://localhost:3100/loki/api/v1/push
+```
+
+### Grafana
+
+#### Screenshots in Grafana alerts
 
 Uncomment the `grafana-image-renderer` service in `docker-compose.yml` and the
 `[unified_alerting.screenshots]` and `[rendering]` sections in
 `grafana/grafana.ini`.
 
-### Google OAuth
+#### Google OAuth
 
 Uncomment the `[auth.google]` section in `grafana/grafana.ini` and add the
 `GF_AUTH_GOOGLE_CLIENT_ID` and `GF_AUTH_GOOGLE_CLIENT_SECRET` variables to `.env`.
+
+
