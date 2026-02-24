@@ -69,50 +69,7 @@ Grafana will be available at `http://HOST:3000`.
 
 # Node Agent (nodes/monitoring-docker-node)
 
-## Agent Installation on a Node
-
-The `nodes/monitoring-docker-node` directory contains the compose file for the
-agent that runs on each machine to be monitored.
-
-| Component     | Version |
-|---------------|---------|
-| Fluent Bit    | 3.2.10  |
-| Node Exporter | v1.9.1  |
-
-### 1. Requirements
-
-- The node must have network connectivity to the monitoring server.
-- Required ports from the node to the server:
-  - `3100` (Loki, for log shipping)
-
-### 2. Configure the Loki endpoint
-
-Edit `nodes/monitoring-docker-node/fluentbit/fluent-bit.conf` and update the
-`Host` field in the `[OUTPUT]` section with the IP or hostname of the monitoring
-server:
-
-```
-[OUTPUT]
-    Host    SERVER_IP
-```
-
-### 3. Start the agent
-
-```
-docker compose up -d
-```
-
-### 4. Register the node in Prometheus
-
-Add the node's IP to `prometheus/targets/nodes.json` on the server
-(see step 3 of the server installation).
-
-
----
-
-## Optional Features
-
-### Loki
+## Docker logs to Loki
 
 Install Docker plugin: 
 
@@ -135,6 +92,16 @@ services:
       options:
         loki-url: "http://localhost:3100/loki/api/v1/push
         loki-external-labels: container_name={{.Name}},env=$ENVIRONMENT # custom labels
+```
+
+## Metrics node-exporter
+
+Based on our tests, we recommend installing Prometheus node-exporter directly on the monitored host.
+
+example: 
+
+```
+sudo apt install prometheus-node-exporter
 ```
 
 ### Grafana
