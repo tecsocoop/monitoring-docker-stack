@@ -4,7 +4,8 @@
 
 # Sensitive config files — use the .example counterparts as templates
 prometheus/targets/nodes.json
-prometheus/prometheus.json
+prometheus/targets/cadvisor.json
+prometheus/prometheus.yml
 prometheus/alertmanager/alertmanager.yml
 grafana/provisioning/alerting/contactpoints.yaml
 
