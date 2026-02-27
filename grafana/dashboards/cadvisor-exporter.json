@@ -18,7 +18,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 0,
+  "id": 1,
   "links": [
     {
       "asDropdown": false,
@@ -588,7 +588,7 @@
               }
             ]
           },
-          "unit": "Bps"
+          "unit": "bps"
         },
         "overrides": []
       },
@@ -796,5 +796,5 @@
   "timezone": "",
   "title": "cadvisor-exporter",
   "uid": "pMEd7m0Mz",
-  "version": 5
+  "version": 1
 }

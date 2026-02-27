@@ -1512,7 +1512,7 @@
       "targets": [
         {
           "editorMode": "code",
-          "expr": "rate(node_network_receive_bytes_total{instance=\"$instance\",env=\"$env\"}[$__rate_interval])*8",
+          "expr": "rate(node_network_receive_bytes_total{instance=\"$instance\",env=\"$env\"}[$__rate_interval])",
           "format": "time_series",
           "legendFormat": "Rx {{device}}",
           "range": true,
@@ -1521,7 +1521,7 @@
         },
         {
           "editorMode": "code",
-          "expr": "rate(node_network_transmit_bytes_total{instance=\"$instance\",env=\"$env\"}[$__rate_interval])*8",
+          "expr": "rate(node_network_transmit_bytes_total{instance=\"$instance\",env=\"$env\"}[$__rate_interval])",
           "format": "time_series",
           "legendFormat": "Tx {{device}}",
           "range": true,
@@ -2532,7 +2532,7 @@
           "targets": [
             {
               "editorMode": "code",
-              "expr": "rate(node_network_receive_bytes_total{instance=\"$instance\",env=\"$env\"}[$__rate_interval])*8",
+              "expr": "rate(node_network_receive_bytes_total{instance=\"$instance\",env=\"$env\"}[$__rate_interval])",
               "format": "time_series",
               "legendFormat": "{{device}} - Rx in",
               "range": true,
@@ -2541,7 +2541,7 @@
             },
             {
               "editorMode": "code",
-              "expr": "rate(node_network_transmit_bytes_total{instance=\"$instance\",env=\"$env\"}[$__rate_interval])*8",
+              "expr": "rate(node_network_transmit_bytes_total{instance=\"$instance\",env=\"$env\"}[$__rate_interval])",
               "format": "time_series",
               "legendFormat": "{{device}} - Tx out",
               "range": true,
