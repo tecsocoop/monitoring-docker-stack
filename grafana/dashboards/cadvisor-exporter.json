@@ -693,7 +693,7 @@
               }
             ]
           },
-          "unit": "Bps"
+          "unit": "bps"
         },
         "overrides": []
       },
@@ -749,8 +749,8 @@
       {
         "allowCustomValue": false,
         "current": {
-          "text": "sit",
-          "value": "sit"
+          "text": "uat",
+          "value": "uat"
         },
         "definition": "label_values(up{job=\"cadvisor\"},env)",
         "label": "env",
