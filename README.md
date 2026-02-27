@@ -94,7 +94,9 @@ services:
         loki-external-labels: container_name={{.Name}},env=$ENVIRONMENT # custom labels
 ```
 
-## Metrics node-exporter
+## Metrics 
+
+### node-exporter
 
 Based on our tests, we recommend installing Prometheus node-exporter directly on the monitored host.
 
@@ -104,15 +106,37 @@ example:
 sudo apt install prometheus-node-exporter
 ```
 
-### Grafana
+### cadvisor
 
-#### Screenshots in Grafana alerts
+Based on our tests, we recommend installing cadvisor with docker running: 
+
+```
+VERSION=0.55.1 # use the latest release version from https://github.com/google/cadvisor/releases
+sudo docker run \
+  --volume=/:/rootfs:ro \
+  --volume=/var/run:/var/run:ro \
+  --volume=/sys:/sys:ro \
+  --volume=/var/lib/docker/:/var/lib/docker:ro \
+  --volume=/dev/disk/:/dev/disk:ro \
+  --publish=18080:8080 \
+  --detach=true \
+  --name=cadvisor \
+  --privileged \
+  --device=/dev/kmsg \
+  ghcr.io/google/cadvisor:$VERSION # for versions prior to v0.53.0, use gcr.io/cadvisor/cadvisor instead
+```
+
+> port was changed for compatibility (18080)
+
+## Grafana
+
+### Screenshots in Grafana alerts
 
 Uncomment the `grafana-image-renderer` service in `docker-compose.yml` and the
 `[unified_alerting.screenshots]` and `[rendering]` sections in
 `grafana/grafana.ini`.
 
-#### Google OAuth
+### Google OAuth
 
 Uncomment the `[auth.google]` section in `grafana/grafana.ini` and add the
 `GF_AUTH_GOOGLE_CLIENT_ID` and `GF_AUTH_GOOGLE_CLIENT_SECRET` variables to `.env`.
