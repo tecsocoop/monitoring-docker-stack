@@ -7,7 +7,7 @@ prometheus/targets/nodes.json
 prometheus/targets/cadvisor.json
 prometheus/prometheus.yml
 prometheus/alertmanager/alertmanager.yml
-grafana/provisioning/alerting/contactpoints.yaml
+#grafana/provisioning/alerting/contactpoints.yaml
 
 # Certificates and private keys
 *.pem
